@@ -1,0 +1,89 @@
+========= Reading for Checked VS Unchecked Exception ========
+
+Checked Exception -
+the one which are checked at compile time. Checked exceptions are exceptions that JAVA makes you deal with one way or another in compile time.
+It will ask you to throw an exception for the class at compile time by showing error markings so that you either surround that block with try catch
+and add your custom method in catch block or you just add "throws CardNotCreatedException" in the method signature like done for (CardNotCreatedException)
+
+Example:
+
+public static void main(String args)
+{
+      readFile(test.txt);
+}
+
+public void readFile(String filename)
+{
+    FileReader reader = new FileReader(filename); // Java shows a read underline for this statement and asks us to explicitly throw error at compile time.
+}
+
+=============== So we do this ===============
+
+public static void main(String args) throws FileNotFoundException
+{
+      readFile(test.txt);
+}
+
+public void readFile(String filename) throws FileNotFoundException
+{
+    FileReader reader = new FileReader(filename);
+}
+
+================= OR =========================
+
+public static void main(String args)
+{
+      readFile(test.txt);
+}
+
+public void readFile(String filename)
+{
+    try
+    {
+        FileReader reader = new FileReader(filename);
+    }
+    catch(FileNotFoundException fnfe)
+    {
+        System.out.println("File does not exists");
+    }
+}
+
+
+
+Unchecked Exception -
+Are the ones where the method could throw NullPointerException but java does not give any compilation error.
+It compiles file and only explodes when we run it. Its because NullpointerException is an unchecked exception. Java doesn't make us
+catch it with a try catch block, it doesn't let us declare it in the method signature that we might throw nullPointerException.
+
+Example:
+
+public static void main(String args)
+{
+      String name = null;
+      printName(name);
+}
+
+public void printName(String name)
+{
+    System.out.println(name); // Throws NullPointerException at runtime. Java does not provide us any clue at compile time to surround this with try catch or throw it in the method signature.
+}
+
+===== In this case we can manually surround with try catch or throw in method signature like we did for checked exception ======
+
+But how do we understand which ones are checked and which ones are unchecked exception ?
+
+Let's check exception hierarchy in JAVA
+Throwable - has two categories - Error and Exception
+
+Unchecked - Anything that comes under runtime exception and all subclasses of runtime exception is a unchecked exception
+Checked - Everything including Exception class except Runtime are checked exception.
+
+                        Throwable
+         Error                              Exception
+                                 1. RunTime Exception           2. SQLException/IOException/MalformedURLException/etc
+                                 NullPointer
+                                 ClassCast
+
+
+Reference :
+https://www.youtube.com/watch?v=bCPClyGsVhc&ab_channel=CodingwithJohn
