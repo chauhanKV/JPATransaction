@@ -1,4 +1,4 @@
-========= Reading for Checked VS Unchecked Exception ========
+### Reading for Checked VS Unchecked Exception ###
 
 Checked Exception -
 the one which are checked at compile time. Checked exceptions are exceptions that JAVA makes you deal with one way or another in compile time.
@@ -87,3 +87,49 @@ Checked - Everything including Exception class except Runtime are checked except
 
 Reference :
 https://www.youtube.com/watch?v=bCPClyGsVhc&ab_channel=CodingwithJohn
+
+
+
+#### Entity LifeCycle ###
+
+All entities are stored in Persistence Context in Spring APP
+
+Transient -----> Managed -----> DB
+
+Transient is the state of the entity before calling save/delete
+Managed is the state when the entity is saved / deleted - this is the time when it enters the Persistence Context.
+
+From Managed State we can do two things:
+( Any changes done to the entities in managed state goes straight into the DB. )
+1. Removed -
+    We can remove the entity from Persistence context by calling Remove() method
+    Or we can keep by calling persist(entity) method.
+2. Detached
+    We can merge(entity)
+    or
+    We can detach(entity), evict(entity), clear(), close()
+
+When the changes are in DB after managed state activities are done, we can query DB like below :
+1. find(class, id)
+2. flush()
+
+
+### Repositories
+
+We create Repositories of the entity which we want to interact with DB directly.
+While creating the repository interface, we extend the interface class with JPARepository and pass the entity type along with the primary key datatype
+Like this :
+@Repository
+public interface IEmployeeRepo extends JpaRepository<Employee, Long> {}
+
+This definition creates the repository of that entity and provides implementation of crud operations on it along with custom implementation
+defined specific to the Entity.
+
+
+
+### AOP - Aspect Oriented Programming ###
+
+Adding functionality to code without changing the code.
+Example : Using @Transactional Annotation, we are adding the functionality of Transactions without making any changes to the code/method.
+
+It creates modularity by allowing the separation of cross-cutting concerns.

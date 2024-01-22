@@ -25,7 +25,7 @@ public class EmployeeService {
 
     // This @Transactional annotation makes this method to be executed in a transaction.
     // The transaction is committed only after the entire method is executed.
-    @Transactional(rollbackOn = {CardNotCreatedException.class}, dontRollbackOn = {})
+    @Transactional(rollbackOn = {CardNotCreatedException.class}, dontRollbackOn = {laptopNotAllocatedException.class})
     public Employee createEmployee(EmployeeDetailDTO employeeDetailDTO) throws CardNotCreatedException, laptopNotAllocatedException {
         Employee employee = Employee.builder().name(employeeDetailDTO.getName()).email(employeeDetailDTO.getEmail()).build();
         Address address = Address.builder().line1(employeeDetailDTO.getLine1()).line2(employeeDetailDTO.getLine2()).city(employeeDetailDTO.getCity()).build();
